@@ -11,9 +11,8 @@ namespace FantasticFour.bloc
 {
     public static class Search
     {
-        public static async Task<string> GetShortStationName(string str)
+        public static string GetShortStationName(string str, List<Station> list)
         {
-            var list = await new JsonClient().GetDataAsync<List<Station>>("/metadata/stations");
             try
             {
                 return (from station in list where string.Equals(station.stationName, str, StringComparison.OrdinalIgnoreCase) select station.stationShortCode).First();
@@ -50,7 +49,7 @@ namespace FantasticFour.bloc
 
                 if (letter.Key != ConsoleKey.Backspace && letter.Key != ConsoleKey.Enter) searchString += letter.KeyChar.ToString();
                 else if (letter.Key == ConsoleKey.Backspace && searchString.Count() > 0) searchString = searchString.Remove(searchString.Count() - 1, 1);
-                else if (letter.Key == ConsoleKey.Enter && !String.IsNullOrWhiteSpace(searchString)) return await GetShortStationName(searchString);
+                else if (letter.Key == ConsoleKey.Enter && !String.IsNullOrWhiteSpace(searchString)) return await GetShortStationName(searchString, list);
 
 
                 if (!String.IsNullOrWhiteSpace(searchString))
