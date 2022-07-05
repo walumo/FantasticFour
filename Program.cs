@@ -30,6 +30,13 @@ namespace FantasticFour
         static async Task Main(string[] args)
         {
             NetworkConnection.InitializeClient();
+            while (true)
+            {
+                string stationCode = await Search.GetStationName();
+                Console.WriteLine("Selected station: "+stationCode);
+                Console.ReadKey();
+            }
+            NetworkConnection.InitializeClient();
             // Asking user choice
             Console.WriteLine("Enter departure town: ");
             string departureTown = UserInputs.GetStringInput();
