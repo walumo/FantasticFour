@@ -10,6 +10,7 @@ namespace FantasticFour
     {
         static async Task Main(string[] args)
         {
+
             NetworkConnection.InitializeClient();
 
             JsonClient client = new JsonClient();
