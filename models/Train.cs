@@ -3,7 +3,7 @@
 namespace FantasticFour.models
 {
 
-    public class Rootobject
+    public class RootobjectTraíns
     {
         public Train[] Property1 { get; set; }
     }
