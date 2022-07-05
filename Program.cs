@@ -29,11 +29,12 @@ namespace FantasticFour
 
         static async Task Main(string[] args)
         {
+            NetworkConnection.InitializeClient();
             // Asking user choice
 
             string departureTown = UserInputs.GetStringInput();
             string arrivalTown = UserInputs.GetStringInput();
-
+            DateTime date = UserInputs.GetDepDate();
             // korjaa jos käyttäjä syöttää pienemmän tai suuremman kun 1-6
 
 
@@ -55,6 +56,7 @@ namespace FantasticFour
                     case UserOptions.Exit:
                         break;
                     case UserOptions.Departures:
+                        Metodit.Departure(date, departureTown, arrivalTown);
                         break;
                     case UserOptions.Arrivals:
                         break;

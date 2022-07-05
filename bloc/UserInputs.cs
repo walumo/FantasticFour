@@ -30,5 +30,26 @@ namespace FantasticFour.bloc
             }
             return input;
         }
+
+        public static DateTime GetDepDate()
+        {
+
+            DateTime date = new DateTime();
+            while (true)
+            {
+                try
+                {
+                    date = Convert.ToDateTime(Console.ReadLine());
+
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Give input in correct form");
+                    continue;
+                }
+                break;
+            }
+            return date;
+        }
     }
 }
