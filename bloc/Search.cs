@@ -49,7 +49,7 @@ namespace FantasticFour.bloc
 
                 if (letter.Key != ConsoleKey.Backspace && letter.Key != ConsoleKey.Enter) searchString += letter.KeyChar.ToString();
                 else if (letter.Key == ConsoleKey.Backspace && searchString.Count() > 0) searchString = searchString.Remove(searchString.Count() - 1, 1);
-                else if (letter.Key == ConsoleKey.Enter && !String.IsNullOrWhiteSpace(searchString)) return await GetShortStationName(searchString, list);
+                else if (letter.Key == ConsoleKey.Enter && !String.IsNullOrWhiteSpace(searchString)) return GetShortStationName(searchString, list);
 
 
                 if (!String.IsNullOrWhiteSpace(searchString))
