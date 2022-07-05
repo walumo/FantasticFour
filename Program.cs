@@ -31,9 +31,12 @@ namespace FantasticFour
         {
             NetworkConnection.InitializeClient();
             // Asking user choice
-
+            Console.WriteLine("Enter departure town: ");
             string departureTown = UserInputs.GetStringInput();
+
+            Console.WriteLine("Enter arrival town: ");
             string arrivalTown = UserInputs.GetStringInput();
+            Console.WriteLine("Enter departure date: ");
             DateTime date = UserInputs.GetDepDate();
             // korjaa jos käyttäjä syöttää pienemmän tai suuremman kun 1-6
 
@@ -42,6 +45,7 @@ namespace FantasticFour
 
             while (true)
             {
+                Console.WriteLine("Choose 0 to exit.");
                 Console.WriteLine("Choose 1 to find out departure of next train");
                 Console.WriteLine("Choose 2 to find out arrival of next train");
                 Console.WriteLine("Choose 3 to find out if selected train is late");
@@ -54,9 +58,10 @@ namespace FantasticFour
                 switch ((UserOptions)userChoice)
                 {
                     case UserOptions.Exit:
+                        Environment.Exit(0);
                         break;
                     case UserOptions.Departures:
-                        Metodit.Departure(date, departureTown, arrivalTown);
+                        await Metodit.Departure(departureTown, arrivalTown, date);
                         break;
                     case UserOptions.Arrivals:
                         break;
