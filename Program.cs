@@ -68,14 +68,6 @@ namespace FantasticFour
                         break;
                 }
             }
-
-            NetworkConnection.InitializeClient();
-
-            JsonClient client = new JsonClient();
-
-            var trains = await client.GetDataAsync<List<Train>>("/trains/latest/5");
-
-            trains.ForEach((train) => Console.WriteLine());
         }
     }
 }
