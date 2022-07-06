@@ -18,7 +18,6 @@ namespace FantasticFour.bloc
 {
     internal class Metodit
     {
-        
         public static async Task Departure(Options options)
         {
             string url = "/live-trains/station/" + options.DepartureStation + "/" + options.DestinationStation + "?departure_date=" + options.Date.ToString("yyyy-MM-dd");
@@ -27,14 +26,23 @@ namespace FantasticFour.bloc
             var trains = await json.GetDataAsync<List<Train>>(url);
             Show.DepartingTrains(trains, options);
         }
-
+        
         public static async Task Arrivals(Options options)
         {
             string url = "/live-trains/station/" + options.DestinationStation + "?arriving_trains=25&arrived_trains=0&departing_trains=0&departed_trains=0&train_categories=Commuter,Long-distance";
+            
             var json = new JsonClient();
-
             var trains = await json.GetDataAsync<List<Train>>(url);
             Show.ArrivingTrains(trains, options);
+        }
+        // Features
+        public static async Task Features(DateTime lähtöPvm, int trainNumber)
+        {
+            string url = "/compositions/" + lähtöPvm.ToString("yyyy-MM-dd") + "/" + trainNumber;
+          
+            var json = new JsonClient();
+            var trains = await json.GetDataAsync<RootobjectFeatures>(url);
+            Console.WriteLine(trains.journeySections[0].wagons[0].wagonType);
         }
     }
 }
