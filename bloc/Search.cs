@@ -8,6 +8,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Data;
 
+//Näytetään käyttäjälle menu jossa voi vaihtaa ohjelman parametrejä
+//GetStationName palauttaa paikkakuntahaun perusteella valikoidun asemalyhenteen
+
 namespace FantasticFour.bloc
 {
     public static class Search
