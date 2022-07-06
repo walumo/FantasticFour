@@ -64,6 +64,7 @@ namespace FantasticFour
                         await Metodit.Departure(departureTown, arrivalTown, date);
                         break;
                     case UserOptions.Arrivals:
+                        await Metodit.Arrivals(arrivalTown);
                         break;
                     case UserOptions.Schedule:
                         break;
