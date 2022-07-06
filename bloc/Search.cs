@@ -6,12 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace FantasticFour.bloc
 {
     public static class Search
     {
-        public static string GetShortStationName(string str, List<Station> list)
+        internal static string GetShortStationName(string str, List<Station> list)
         {
             try
             {
@@ -24,13 +25,13 @@ namespace FantasticFour.bloc
                 {
                     return (from station in list where Regex.IsMatch(station.stationName, str, RegexOptions.IgnoreCase) select station.stationShortCode).First();
                 }
-                catch (Exception e2)
+                catch (Exception)
                 {
                     return "HKI";
                 }
             }
         }
-        public static async Task<string> GetStationName()
+        internal static async Task<string> GetStationName()
         {
             List<Station> list = await new JsonClient().GetDataAsync<List<Station>>("/metadata/stations");
             string searchString = "";
@@ -38,7 +39,7 @@ namespace FantasticFour.bloc
             {
                 List<Station> sIndex = new List<Station>();
 
-                Console.Write("Search: " + searchString);
+                Console.Write("Station: "+searchString);
                 ConsoleKeyInfo letter = Console.ReadKey();
                 Console.Clear();
 
@@ -76,6 +77,33 @@ namespace FantasticFour.bloc
                     }
                 }
             }
+        }
+        public static async Task<Options> ShowOptionsMenu(Options options)
+        {
+            while (true)
+            {
+                RefreshOptionsMenu(options);
+                
+                Console.Write("\nPress (A) to enter departure station");
+                Console.Write("\nPress (S) to enter destination");
+                Console.Write("\nPress (D) to enter date");
+                Console.Write("\nPress (Q) to Exit options");
+                ConsoleKeyInfo input = Console.ReadKey();
+                Console.Clear();
+                if (input.Key == ConsoleKey.A) options.DepartureStation = await GetStationName();
+                else if (input.Key == ConsoleKey.S) options.DestinationStation = await GetStationName();
+                else if (input.Key == ConsoleKey.D) options.Date = UserInputs.GetDepDate();
+                else if (input.Key == ConsoleKey.Q) break;
+            }
+            
+            return options;
+        }
+        internal static void RefreshOptionsMenu(Options options)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine(" {0, -15} {1, -15} {2, -15}", "Departure", "Destination", "Date");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine(" {0, -15} {1, -15} {2, -15}", options.DepartureStation, options.DestinationStation, options.Date.ToString("dd.MM.yyyy"));
         }
     }
 }
