@@ -14,7 +14,7 @@ namespace FantasticFour
 
     static class Program
     {
-
+       
         enum UserOptions
         {
             Exit,
