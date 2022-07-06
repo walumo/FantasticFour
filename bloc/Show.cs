@@ -45,6 +45,8 @@ namespace FantasticFour.bloc
             Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "Train ID","Type", "Departing", "At", "Arriving", "At");
             Console.BackgroundColor = ConsoleColor.Black;
 
+            list = list.Where(x => x.trainCategory == "Commuter" || x.trainCategory == "Long-distance").ToList();
+
             foreach (Train train in list)
             {
                 int trainId = train.trainNumber;
@@ -60,19 +62,48 @@ namespace FantasticFour.bloc
         internal static void RefreshArriving(List<Train> list, Options options)
         {
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -20}", "Train ID","Type", "Arriving", "At");
+            Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -20} {4, -10} {5, -10}", "Train ID","Type", "Arriving", "At", "From", "Late");
             Console.BackgroundColor = ConsoleColor.Black;
 
             foreach (Train train in list)
             {
+                int index = default;
+                foreach(Timetablerow ttr in train.timeTableRows)
+                {
+                    if(ttr.stationShortCode == options.DestinationStation)
+                    {
+                        index = ttr.stationShortCode.IndexOf(options.DestinationStation);
+                    }
+                }
                 int trainId = train.trainNumber;
                 string trainType = train.trainType;
                 string destination = options.DestinationStation;
+                
+                string from = (from x in train.timeTableRows
+                               where x.commercialStop &&
+                               x.trainStopping
+                               select x.stationShortCode).First();
+
                 DateTime arrives = (from x in train.timeTableRows
                                     where x.stationShortCode == destination
                                     select x.scheduledTime).First();
-
-                Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -20}", trainId, trainType, destination, arrives.ToString("HH:mm dd:MM:yyyy"));
+                string late =  "";
+                if(DateTime.Now - train.timeTableRows[index].liveEstimateTime < DateTime.Now - train.timeTableRows[index].scheduledTime)
+                {
+                    late = "Late";
+                    Console.Write(" {0, -10} {1, -10} {2, -10} {3, -20} {4, -10}", trainId, trainType, destination, arrives.ToString("HH:mm dd:MM:yyyy"), from);
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.Write(" {0, -10}\n", late);
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+                else
+                {
+                    late = "On time";
+                    Console.Write(" {0, -10} {1, -10} {2, -10} {3, -20} {4, -10}", trainId, trainType, destination, arrives.ToString("HH:mm dd:MM:yyyy"), from);
+                    Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    Console.Write(" {0, -10}\n", late);
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
             }
         }
     }
