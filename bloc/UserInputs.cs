@@ -34,24 +34,30 @@ namespace FantasticFour.bloc
         public static DateTime GetDepDate()
         {
 
-            DateTime date = new DateTime();
             while (true)
             {
-                try
+
+                Console.Write("Enter date (dd.mm.yyyy): ");
+                string str = Console.ReadLine();
+                if (String.IsNullOrWhiteSpace(str)) return DateTime.Now;
+                else
                 {
-                    Console.Write("Enter date (yyyy/mm/dd): ");
-                    date = Convert.ToDateTime(Console.ReadLine());
+                    try
+                    {
+                        string[] dtParser = new string[3];
+                        dtParser = str.Split('.');
+                        Console.Clear();
+                        return new DateTime(Convert.ToInt32(dtParser[2]), Convert.ToInt32(dtParser[1]), Convert.ToInt32(dtParser[0]));
+                    }
+                    catch (Exception e1)
+                    {
+                        Console.WriteLine("Not a valid date! Use dd.mm.yyyy...");
+                        Console.ReadKey();
+                        Console.Clear();
+                    }
                 }
-                catch (Exception)
-                {
-                    Console.WriteLine("Give input in correct form, press any key to try again...");
-                    Console.ReadKey();
-                    Console.Clear();
-                    continue;
-                }
-                break;
+
             }
-            return date;
         }
     }
 }
