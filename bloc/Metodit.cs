@@ -17,7 +17,7 @@ namespace FantasticFour.bloc
 {
     internal class Metodit
     {
-        
+        // Departure
         public static async Task Departure( string lähtöAsema, string määränpääAsema, DateTime lähtöPvm)
         {
             string url = "/live-trains/station/" + lähtöAsema + "/" + määränpääAsema + "?departure_date=" + lähtöPvm.ToString("yyyy-MM-dd");
@@ -30,7 +30,7 @@ namespace FantasticFour.bloc
 
         }
 
-
+        // Arrivals
         public static async Task Arrivals(string määränpääAsema)
         {
             string url = "/live-trains/station/" + määränpääAsema + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=20&minutes_after_arrival=20";
@@ -39,6 +39,16 @@ namespace FantasticFour.bloc
             var trains = await json.GetDataAsync<List<Train>>(url);
             trains.ForEach((train) => Console.WriteLine(train.trainNumber));
         }
+        // Features
+        public static async Task Features(DateTime lähtöPvm, int trainNumber)
+        {
+            string url = "/compositions/" + lähtöPvm.ToString("yyyy-MM-dd") + "/" + trainNumber;
+          
+            var json = new JsonClient();
 
+            var trains = await json.GetDataAsync<RootobjectFeatures>(url);
+
+            Console.WriteLine(trains.journeySections[0].wagons[0].wagonType);
+        }
     }
 }
