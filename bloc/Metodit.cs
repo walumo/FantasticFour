@@ -13,10 +13,17 @@ namespace FantasticFour.bloc
         {
 
             string url = "/live-trains/station/" + lähtöAsema + "/" + määränpääAsema + "?departure_date=" + lähtöPvm.ToString("yyyy-MM-dd");
+            //string url2 = "/live-trains/station/" + määränpääAsema + "/" + lähtöAsema + "?departure_date=" + lähtöPvm.ToString("yyyy-MM-dd");
+
             var json = new JsonClient();
 
             var trains = await json.GetDataAsync<List<Train>>(url);
             trains.ForEach((train) => Console.WriteLine(train.trainNumber));
+
+            //Console.WriteLine("TESTI!!!!!");
+
+            //var trains2 = await json.GetDataAsync<List<Train>>(url2);
+            //trains2.ForEach((train1) => Console.WriteLine(train1.trainType));
 
         }
 
@@ -30,6 +37,15 @@ namespace FantasticFour.bloc
             var trains = await json.GetDataAsync<List<Train>>(url);
             trains.ForEach((train) => Console.WriteLine(train.trainNumber));
 
+        }
+
+        public static async Task Arrivals(string määränpääAsema)
+        {
+            string url = "/live-trains/station/" + määränpääAsema + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=20&minutes_after_arrival=20";
+            var json = new JsonClient();
+
+            var trains = await json.GetDataAsync<List<Train>>(url);
+            trains.ForEach((train) => Console.WriteLine(train.trainNumber));
         }
 
 
