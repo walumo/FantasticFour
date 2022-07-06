@@ -39,8 +39,6 @@ namespace FantasticFour.bloc
 
         }
 
-<<<<<<< HEAD
-=======
         public static async Task Arrivals(string määränpääAsema)
         {
             string url = "/live-trains/station/" + määränpääAsema + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=20&minutes_after_arrival=20";
@@ -50,8 +48,5 @@ namespace FantasticFour.bloc
             trains.ForEach((train) => Console.WriteLine(train.trainNumber));
         }
 
-
-
->>>>>>> 2457a7424741dd1697458ba6037008d63ace9093
     }
 }

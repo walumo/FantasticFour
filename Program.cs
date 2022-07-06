@@ -11,10 +11,9 @@ using FantasticFour.bloc;
 namespace FantasticFour
 {
 
-
     static class Program
     {
-       
+
         enum UserOptions
         {
             Exit,
@@ -22,37 +21,32 @@ namespace FantasticFour
             Arrivals,
             Schedule,
             Features,
-            DepTown,
-            ArrTown
+            Options
         };
-
 
         static async Task Main(string[] args)
         {
+            // Luodaan options -olio ja annetaan sille vakioarvot. 
+            Options options = new Options(departure: "HKI", destination: "TKU", date: DateTime.Now);
+            
+            //Http-clientin alustaminen. 
             NetworkConnection.InitializeClient();
-            // Asking user choice
-            Console.WriteLine("Enter departure town: ");
-            string departureTown = UserInputs.GetStringInput();
-
-            Console.WriteLine("Enter arrival town: ");
-            string arrivalTown = UserInputs.GetStringInput();
-            Console.WriteLine("Enter departure date: ");
-            DateTime date = UserInputs.GetDepDate();
-            // korjaa jos käyttäjä syöttää pienemmän tai suuremman kun 1-6
-
-
-
 
             while (true)
-            {
+            {   
+                //Console.Clear();
+                Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine("Train scheduler 1.0.0\n");
+                Console.BackgroundColor = ConsoleColor.Black;
+
                 Console.WriteLine("Choose 0 to exit.");
                 Console.WriteLine("Choose 1 to find out departure of next train");
                 Console.WriteLine("Choose 2 to find out arrival of next train");
                 Console.WriteLine("Choose 3 to find out if selected train is late");
                 Console.WriteLine("Choose 4 to list features of selected train");
-                Console.WriteLine("Choose 5 to edit location of departure town");
-                Console.WriteLine("Choose 6 to edit location of arrival town");
+                Console.WriteLine("Choose 5 to edit locations and date");
 
+                Console.Write("\nSelect your option: ");
                 int userChoice = UserInputs.GetIntInput();
 
                 switch ((UserOptions)userChoice)
@@ -61,18 +55,18 @@ namespace FantasticFour
                         Environment.Exit(0);
                         break;
                     case UserOptions.Departures:
-                        await Metodit.Departure(departureTown, arrivalTown, date);
+                        await Metodit.Departure(options.DepartureStation, options.DestinationStation, options.Date);
                         break;
                     case UserOptions.Arrivals:
-                        await Metodit.Arrivals(arrivalTown);
+                        await Metodit.Arrivals(options.DestinationStation);
                         break;
                     case UserOptions.Schedule:
                         break;
                     case UserOptions.Features:
                         break;
-                    case UserOptions.DepTown:
-                        break;
-                    case UserOptions.ArrTown:
+                    case UserOptions.Options:
+                        Console.Clear();
+                        options = await Search.ShowOptionsMenu(options);
                         break;
                 }
             }

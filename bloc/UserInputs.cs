@@ -39,12 +39,14 @@ namespace FantasticFour.bloc
             {
                 try
                 {
+                    Console.Write("Enter date (yyyy/mm/dd): ");
                     date = Convert.ToDateTime(Console.ReadLine());
-
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Give input in correct form");
+                    Console.WriteLine("Give input in correct form, press any key to try again...");
+                    Console.ReadKey();
+                    Console.Clear();
                     continue;
                 }
                 break;
