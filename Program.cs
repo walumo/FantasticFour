@@ -13,7 +13,7 @@ namespace FantasticFour
 
     static class Program
     {
-        // Valikon vaihtoehdot.
+
         enum UserOptions
         {
             Exit,
@@ -63,6 +63,7 @@ namespace FantasticFour
                     case UserOptions.Schedule:
                         break;
                     case UserOptions.Features:
+                        await Metodit.Features(options.Date, 967);
                         break;
                     case UserOptions.Options:
                         Console.Clear();
