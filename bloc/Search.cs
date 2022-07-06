@@ -23,7 +23,7 @@ namespace FantasticFour.bloc
             }
             catch (Exception e1)
             {
-                File.AppendAllText(Environment.CurrentDirectory + "errorLog.txt", DateTime.Now + "| error converting station name: " + e1.Message + "\n");
+                File.AppendAllText("errorLog.txt", DateTime.Now + "| error: " +e1.ToString() + "\n\n");
                 try
                 {
                     return (from station in list where Regex.IsMatch(station.stationName, str, RegexOptions.IgnoreCase) select station.stationShortCode).First();
