@@ -11,16 +11,22 @@ namespace FantasticFour.network
     {
         public async Task<T> GetDataAsync<T>(string urlParams)
         {
+            //Apin endpoint url
             const string baseAddress = "https://rata.digitraffic.fi/api/v1";
 
+            //Requestin url:n luonti
             string url = baseAddress + urlParams;
 
+            //Kutsutaan Apia NetworkConnectionin HttpClientillä
             using (HttpResponseMessage response = await NetworkConnection.Client.GetAsync(url))
             {
+                //Jos Api palauttaa koodin 200-299
                 if (response.IsSuccessStatusCode)
                 {
+                    //luetaan Apilta saadun responsen sisältö byte[]:in
                     byte[] compressedResponse = await response.Content.ReadAsByteArrayAsync();
 
+                    //Gzipin dekompressointi
                     try
                     {
                         using (var inputStream = new MemoryStream(compressedResponse))
@@ -28,6 +34,8 @@ namespace FantasticFour.network
                         using (var streamReader = new StreamReader(gZipStream))
                         {
                             var decompressed = streamReader.ReadToEnd();
+
+                            //palautetaan dekompressoidusta jsonista olio
                             return JsonSerializer.Deserialize<T>(decompressed);
                         }
                     }
