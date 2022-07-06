@@ -33,7 +33,9 @@ namespace FantasticFour.bloc
         }
         internal static async Task<string> GetStationName()
         {
+            Console.WriteLine("Loading...");
             List<Station> list = await new JsonClient().GetDataAsync<List<Station>>("/metadata/stations");
+            Console.Clear();
             string searchString = "";
             while (true)
             {
