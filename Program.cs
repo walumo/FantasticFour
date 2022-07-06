@@ -34,7 +34,7 @@ namespace FantasticFour
 
             while (true)
             {   
-                //Console.Clear();
+                Console.Clear();
                 Console.BackgroundColor = ConsoleColor.DarkMagenta;
                 Console.WriteLine("Train scheduler 1.0.0\n");
                 Console.BackgroundColor = ConsoleColor.Black;
@@ -55,10 +55,10 @@ namespace FantasticFour
                         Environment.Exit(0);
                         break;
                     case UserOptions.Departures:
-                        await Metodit.Departure(options.DepartureStation, options.DestinationStation, options.Date);
+                        await Metodit.Departure(options);
                         break;
                     case UserOptions.Arrivals:
-                        await Metodit.Arrivals(options.DestinationStation);
+                        await Metodit.Arrivals(options);
                         break;
                     case UserOptions.Schedule:
                         break;
