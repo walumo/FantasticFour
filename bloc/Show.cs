@@ -32,7 +32,7 @@ namespace FantasticFour.bloc
             {
                 Console.Clear();
                 RefreshArriving(list, options);
-                Console.WriteLine("\nShowing trains arriving to {0} on {1}",options.DestinationStation, options.Date.ToShortDateString());
+                Console.WriteLine("\nShowing next 25 trains arriving to {0}",options.DestinationStation, options.Date.ToShortDateString());
                 Console.Write("Press any key to exit...");
                 var input = Console.ReadKey();
                 if (input.Key != ConsoleKey.Escape) break;
