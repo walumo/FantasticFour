@@ -13,7 +13,7 @@ namespace FantasticFour
 
     static class Program
     {
-
+        // Valikon vaihtoehdot.
         enum UserOptions
         {
             Exit,
@@ -26,7 +26,10 @@ namespace FantasticFour
 
         static async Task Main(string[] args)
         {
+            // Luodaan options -olio ja annetaan sille vakioarvot. 
             Options options = new Options(departure: "HKI", destination: "TKU", date: DateTime.Now);
+            
+            //Http-clientin alustaminen. 
             NetworkConnection.InitializeClient();
 
             while (true)
