@@ -17,27 +17,24 @@ namespace FantasticFour.bloc
 {
     internal class Metodit
     {
-        // Departure
-        public static async Task Departure( string lähtöAsema, string määränpääAsema, DateTime lähtöPvm)
+        public static async Task Departure(Options options)
         {
-            string url = "/live-trains/station/" + lähtöAsema + "/" + määränpääAsema + "?departure_date=" + lähtöPvm.ToString("yyyy-MM-dd");
+            string url = "/live-trains/station/" + options.DepartureStation + "/" + options.DestinationStation + "?departure_date=" + options.Date.ToString("yyyy-MM-dd");
 
             var json = new JsonClient();
 
             var trains = await json.GetDataAsync<List<Train>>(url);
-            trains.ForEach((train) => Console.WriteLine(train.trainNumber));
+            Show.DepartingTrains(trains, options);
 
 
         }
-
-        // Arrivals
-        public static async Task Arrivals(string määränpääAsema)
+        public static async Task Arrivals(Options options)
         {
-            string url = "/live-trains/station/" + määränpääAsema + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=20&minutes_after_arrival=20";
+            string url = "/live-trains/station/" + options.DestinationStation + "?minutes_before_departure=0&minutes_after_departure=0&minutes_before_arrival=20&minutes_after_arrival=20";
             var json = new JsonClient();
 
             var trains = await json.GetDataAsync<List<Train>>(url);
-            trains.ForEach((train) => Console.WriteLine(train.trainNumber));
+            Show.ArrivingTrains(trains, options);
         }
         // Features
         public static async Task Features(DateTime lähtöPvm, int trainNumber)
