@@ -41,9 +41,10 @@ namespace FantasticFour
                 Console.WriteLine("Choose 4 to edit locations, date and train ID");
 
                 Console.Write("\nSelect your option: ");
-                int userChoice = UserInputs.GetIntInput();
+                string userChoice = Console.ReadLine();
+                if (String.IsNullOrWhiteSpace(userChoice) || !int.TryParse(userChoice, out int result)) continue; 
 
-                switch ((UserOptions)userChoice)
+                switch ((UserOptions)Convert.ToInt32(userChoice))
                 {
                     case UserOptions.Exit:
                         Environment.Exit(0);
