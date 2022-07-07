@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FantasticFour.bloc
 {
-    public class UserInputs
+    public static class UserInputs
     {
         public static string GetStringInput()
         {
@@ -49,7 +49,7 @@ namespace FantasticFour.bloc
                         Console.Clear();
                         return new DateTime(Convert.ToInt32(dtParser[2]), Convert.ToInt32(dtParser[1]), Convert.ToInt32(dtParser[0]));
                     }
-                    catch (Exception e1)
+                    catch (Exception)
                     {
                         Console.WriteLine("Not a valid date! Use dd.mm.yyyy...");
                         Console.ReadKey();

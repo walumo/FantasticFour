@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace FantasticFour.bloc
 {
-    internal class Metodit
+    internal static class Metodit
     {
         public static async Task Departure(Options options)
         {
