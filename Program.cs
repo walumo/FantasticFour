@@ -19,7 +19,6 @@ namespace FantasticFour
             Exit,
             Departures,
             Arrivals,
-            Schedule,
             Features,
             Options
         };
@@ -39,12 +38,11 @@ namespace FantasticFour
                 Console.WriteLine("Train scheduler 1.0.0\n");
                 Console.BackgroundColor = ConsoleColor.Black;
 
-                Console.WriteLine("Choose 0 to exit.");
+                Console.WriteLine("Choose 0 to exit");
                 Console.WriteLine("Choose 1 to show route schedules");
                 Console.WriteLine("Choose 2 to show arrivals on selected destination");
-                Console.WriteLine("Choose 3 to find out if selected train is late");
-                Console.WriteLine("Choose 4 to list features of selected train");
-                Console.WriteLine("Choose 5 to edit locations and date");
+                Console.WriteLine("Choose 3 to list features of selected train");
+                Console.WriteLine("Choose 4 to edit locations, date and train ID");
 
                 Console.Write("\nSelect your option: ");
                 int userChoice = UserInputs.GetIntInput();
@@ -59,8 +57,6 @@ namespace FantasticFour
                         break;
                     case UserOptions.Arrivals:
                         await Metodit.Arrivals(options);
-                        break;
-                    case UserOptions.Schedule:
                         break;
                     case UserOptions.Features:
                         await Metodit.Features(options);
