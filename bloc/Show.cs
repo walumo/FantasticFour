@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace FantasticFour.bloc
 {
-    public class Show
+    static public class Show
     {
         public static void Features(RootobjectFeatures train, Options options)
         {
@@ -19,7 +19,7 @@ namespace FantasticFour.bloc
             {
                 Console.Clear();
                 RefreshFeatures(train, options);
-                Console.WriteLine("\nShowing train no: {0} features",options.TrainNumber);
+                Console.WriteLine("\nShowing train no: {0} features on {1}", options.TrainNumber, options.Date.ToShortDateString());
                 Console.Write("Press any key to exit...");
                 var input = Console.ReadKey();
                 if (input.Key != ConsoleKey.Escape) break;

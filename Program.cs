@@ -62,7 +62,6 @@ namespace FantasticFour
                         await Metodit.Features(options);
                         break;
                     case UserOptions.Options:
-                        Console.Clear();
                         options = await Search.ShowOptionsMenu(options);
                         break;
                 }
