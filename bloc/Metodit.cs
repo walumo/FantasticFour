@@ -41,8 +41,8 @@ namespace FantasticFour.bloc
             string url = "/compositions/" + options.Date.ToString("yyyy-MM-dd") + "/" + options.TrainNumber;
           
             var json = new JsonClient();
-            var trains = await json.GetDataAsync<RootobjectFeatures>(url);
-            //Show.Features(trains, options);
+            var train = await json.GetDataAsync<RootobjectFeatures>(url);
+            Show.Features(train, options);
         }
     }
 }

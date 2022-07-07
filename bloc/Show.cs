@@ -13,6 +13,18 @@ namespace FantasticFour.bloc
 {
     public class Show
     {
+        public static void Features(RootobjectFeatures train, Options options)
+        {
+            while (true)
+            {
+                Console.Clear();
+                RefreshFeatures(train, options);
+                Console.WriteLine("\nShowing train no: {0} features",options.TrainNumber);
+                Console.Write("Press any key to exit...");
+                var input = Console.ReadKey();
+                if (input.Key != ConsoleKey.Escape) break;
+            }
+        }
         public static void DepartingTrains(List<Train> list, Options options)
         {
             while (true)
@@ -105,6 +117,47 @@ namespace FantasticFour.bloc
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
             }
+        }
+        internal static void RefreshFeatures(RootobjectFeatures train, Options options)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -5}", "Train ID", "Type", "Catering", "Playground", "Disabled", "Pet");
+            Console.BackgroundColor = ConsoleColor.Black;
+
+
+            string catering = "";
+            string playground = "";
+            string disabled = "";
+            string pet = "";
+
+            foreach (Wagon wagon in train.journeySections[0].wagons)
+            {
+                if (String.IsNullOrWhiteSpace(catering) || catering == "No")
+                {
+                    catering = wagon.catering ? "Yes" : "No";
+                }
+                if (String.IsNullOrWhiteSpace(playground) || playground == "No")
+                {
+                    playground = wagon.playground ? "Yes" : "No";
+                }
+                if (String.IsNullOrWhiteSpace(disabled) || disabled == "No")
+                {
+                    disabled = wagon.disabled ? "Yes" : "No";
+                }
+                if (String.IsNullOrWhiteSpace(pet) || pet == "No")
+                {
+                    pet = wagon.pet ? "Yes" : "No";
+                }
+            }
+
+            Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}",
+                train.trainNumber,
+                train.trainType,
+                catering,
+                playground,
+                disabled,
+                pet
+                );
         }
     }
 }
