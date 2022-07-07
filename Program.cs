@@ -27,7 +27,7 @@ namespace FantasticFour
         static async Task Main(string[] args)
         {
             // Luodaan options -olio ja annetaan sille vakioarvot. 
-            Options options = new Options(departure: "HKI", destination: "TKU", date: DateTime.Now);
+            Options options = new Options(departure: "HKI", destination: "TKU", date: DateTime.Now, trainNumber:1);
             
             //Http-clientin alustaminen. 
             NetworkConnection.InitializeClient();
@@ -63,7 +63,7 @@ namespace FantasticFour
                     case UserOptions.Schedule:
                         break;
                     case UserOptions.Features:
-                        await Metodit.Features(options.Date, 967);
+                        await Metodit.Features(options);
                         break;
                     case UserOptions.Options:
                         Console.Clear();

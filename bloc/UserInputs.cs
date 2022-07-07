@@ -59,5 +59,21 @@ namespace FantasticFour.bloc
 
             }
         }
+        public static int GetTrainNumber()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Enter train number: ");
+                string input = Console.ReadLine();
+                if (String.IsNullOrWhiteSpace(input)) return default;
+                if (!String.IsNullOrWhiteSpace(input) && int.TryParse(input, out int result) && result <= 9999 && result > 0) return result;
+                else
+                {
+                    Console.WriteLine("Invalid train number! Enter between 1-9999...");
+                    Console.ReadKey();
+                }
+            }
+        }
     }
 }

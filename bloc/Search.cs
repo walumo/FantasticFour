@@ -92,12 +92,14 @@ namespace FantasticFour.bloc
                 Console.Write("\nPress (A) to enter departure station");
                 Console.Write("\nPress (S) to enter destination");
                 Console.Write("\nPress (D) to enter date");
+                Console.Write("\nPress (F) to enter train number");
                 Console.Write("\nPress (Q) to Exit options");
                 ConsoleKeyInfo input = Console.ReadKey();
                 Console.Clear();
                 if (input.Key == ConsoleKey.A) options.DepartureStation = await GetStationName();
                 else if (input.Key == ConsoleKey.S) options.DestinationStation = await GetStationName();
                 else if (input.Key == ConsoleKey.D) options.Date = UserInputs.GetDepDate();
+                else if (input.Key == ConsoleKey.F) options.TrainNumber = UserInputs.GetTrainNumber();
                 else if (input.Key == ConsoleKey.Q) break;
             }
             
@@ -105,10 +107,11 @@ namespace FantasticFour.bloc
         }
         internal static void RefreshOptionsMenu(Options options)
         {
+            Console.Clear();
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine(" {0, -15} {1, -15} {2, -15}", "Departure", "Destination", "Date");
+            Console.WriteLine(" {0, -15} {1, -15} {2, -15} {3, -15}", "Departure", "Destination", "Date", "No");
             Console.BackgroundColor = ConsoleColor.Black;
-            Console.WriteLine(" {0, -15} {1, -15} {2, -15}", options.DepartureStation, options.DestinationStation, options.Date.ToString("dd.MM.yyyy"));
+            Console.WriteLine(" {0, -15} {1, -15} {2, -15} {3, -15}", options.DepartureStation, options.DestinationStation, options.Date.ToString("dd.MM.yyyy"), options.TrainNumber);
         }
     }
 }

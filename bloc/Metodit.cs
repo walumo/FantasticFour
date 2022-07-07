@@ -36,13 +36,13 @@ namespace FantasticFour.bloc
             Show.ArrivingTrains(trains, options);
         }
         // Features
-        public static async Task Features(DateTime lähtöPvm, int trainNumber)
+        public static async Task Features(Options options)
         {
-            string url = "/compositions/" + lähtöPvm.ToString("yyyy-MM-dd") + "/" + trainNumber;
+            string url = "/compositions/" + options.Date.ToString("yyyy-MM-dd") + "/" + options.TrainNumber;
           
             var json = new JsonClient();
-            var trains = await json.GetDataAsync<RootobjectFeatures>(url);
-            Console.WriteLine(trains.journeySections[0].wagons[0].wagonType);
+            var train = await json.GetDataAsync<RootobjectFeatures>(url);
+            Show.Features(train, options);
         }
     }
 }
