@@ -130,34 +130,42 @@ namespace FantasticFour.bloc
             string disabled = "";
             string pet = "";
 
-            foreach (Wagon wagon in train.journeySections[0].wagons)
+            try
             {
-                if (String.IsNullOrWhiteSpace(catering) || catering == "No")
+                foreach (Wagon wagon in train.journeySections[0].wagons)
                 {
-                    catering = wagon.catering ? "Yes" : "No";
+                    if (String.IsNullOrWhiteSpace(catering) || catering == "No")
+                    {
+                        catering = wagon.catering ? "Yes" : "No";
+                    }
+                    if (String.IsNullOrWhiteSpace(playground) || playground == "No")
+                    {
+                        playground = wagon.playground ? "Yes" : "No";
+                    }
+                    if (String.IsNullOrWhiteSpace(disabled) || disabled == "No")
+                    {
+                        disabled = wagon.disabled ? "Yes" : "No";
+                    }
+                    if (String.IsNullOrWhiteSpace(pet) || pet == "No")
+                    {
+                        pet = wagon.pet ? "Yes" : "No";
+                    }
                 }
-                if (String.IsNullOrWhiteSpace(playground) || playground == "No")
-                {
-                    playground = wagon.playground ? "Yes" : "No";
-                }
-                if (String.IsNullOrWhiteSpace(disabled) || disabled == "No")
-                {
-                    disabled = wagon.disabled ? "Yes" : "No";
-                }
-                if (String.IsNullOrWhiteSpace(pet) || pet == "No")
-                {
-                    pet = wagon.pet ? "Yes" : "No";
-                }
-            }
 
-            Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}",
-                train.trainNumber,
-                train.trainType,
-                catering,
-                playground,
-                disabled,
-                pet
-                );
+                Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}",
+                    train.trainNumber,
+                    train.trainType,
+                    catering,
+                    playground,
+                    disabled,
+                    pet
+                    );
+            }
+            catch (Exception exFeatures)
+            {
+                File.AppendAllText("errorLog.txt", DateTime.Now + "| error: Could not get Wagon features \n" + exFeatures.ToString() + "\n\n");
+                Console.WriteLine("\nSomething went wrong: No data to display.\n");
+            }
         }
     }
 }
