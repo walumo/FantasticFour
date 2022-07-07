@@ -30,7 +30,15 @@ namespace FantasticFour.bloc
             while (true)
             {
                 Console.Clear();
-                RefreshDeparting(list, options);
+                try
+                {
+                    RefreshDeparting(list, options);
+                }
+                catch (Exception exDep)
+                {
+                    File.AppendAllText("errorLog.txt", DateTime.Now + "| error: Could not get Wagon features \n" + exDep.ToString() + "\n\n");
+                    Console.WriteLine("\nSomething went wrong: No data to display.\n");
+                }
                 Console.WriteLine("\nShowing departing trains from {0} to {1} at {2}", options.DepartureStation, options.DestinationStation, options.Date.ToShortDateString());
                 Console.Write("Press any key to exit...");
                 var input = Console.ReadKey();
@@ -46,9 +54,7 @@ namespace FantasticFour.bloc
                 Console.BackgroundColor = ConsoleColor.DarkMagenta;
                 Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -20} {4, -10} {5, -10}", "Train ID", "Type", "Arriving", "At", "From", "Late");
                 Console.BackgroundColor = ConsoleColor.Black;
-
                 RefreshArriving(list, options).Wait();
-                
                 Console.WriteLine("\nShowing next 25 trains arriving to {0}", options.DestinationStation, options.Date.ToShortDateString());
                 Console.Write("Press any key to exit...");
                 var input = Console.ReadKey();
