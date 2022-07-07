@@ -2,11 +2,11 @@
 using FantasticFour.network;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Data;
 
 //Näytetään käyttäjälle menu jossa voi vaihtaa ohjelman parametrejä
 //GetStationName palauttaa paikkakuntahaun perusteella valikoidun asemalyhenteen
@@ -44,7 +44,7 @@ namespace FantasticFour.bloc
             {
                 List<Station> sIndex = new List<Station>();
 
-                Console.Write("Station: "+searchString);
+                Console.Write("Station: " + searchString);
                 ConsoleKeyInfo letter = Console.ReadKey();
                 Console.Clear();
 
@@ -88,7 +88,7 @@ namespace FantasticFour.bloc
             while (true)
             {
                 RefreshOptionsMenu(options);
-                
+
                 Console.Write("\nPress (A) to enter departure station");
                 Console.Write("\nPress (S) to enter destination");
                 Console.Write("\nPress (D) to enter date");
@@ -102,7 +102,7 @@ namespace FantasticFour.bloc
                 else if (input.Key == ConsoleKey.F) options.TrainNumber = UserInputs.GetTrainNumber();
                 else if (input.Key == ConsoleKey.Q) break;
             }
-            
+
             return options;
         }
         internal static void RefreshOptionsMenu(Options options)

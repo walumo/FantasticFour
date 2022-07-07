@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FantasticFour.bloc
 {
@@ -23,7 +21,7 @@ namespace FantasticFour.bloc
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("Give input in correct form");
+                    Console.Write("Give input in correct form");
                     continue;
                 }
                 break;

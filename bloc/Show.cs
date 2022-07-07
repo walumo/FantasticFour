@@ -1,19 +1,16 @@
 ﻿using FantasticFour.models;
-using FantasticFour.network;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Data;
-using System.Threading;
 
 namespace FantasticFour.bloc
 {
     static public class Show
     {
-        public static async Task Features(RootobjectFeatures train, Options options)
+        public static void Features(RootobjectFeatures train, Options options)
         {
             while (true)
             {
@@ -25,6 +22,7 @@ namespace FantasticFour.bloc
                 if (input.Key != ConsoleKey.Escape) break;
             }
         }
+
         public static void DepartingTrains(List<Train> list, Options options)
         {
             while (true)
@@ -45,7 +43,7 @@ namespace FantasticFour.bloc
                 if (input.Key != ConsoleKey.Escape) break;
             }
 
-        }        
+        }
         public static void ArrivingTrains(List<Train> list, Options options)
         {
             while (true)
@@ -64,7 +62,7 @@ namespace FantasticFour.bloc
         internal static void RefreshDeparting(List<Train> list, Options options)
         {
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "Train ID","Type", "Departing", "At", "Arriving", "At");
+            Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", "Train ID", "Type", "Departing", "At", "Arriving", "At");
             Console.BackgroundColor = ConsoleColor.Black;
 
             list = list.Where(x => x.trainCategory == "Commuter" || x.trainCategory == "Long-distance").ToList();
@@ -80,7 +78,7 @@ namespace FantasticFour.bloc
 
                 Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", trainId, trainType, departing, leaves.ToString("HH:mm"), destination, arrives.ToString("HH:mm"));
             }
-        }        
+        }
         internal static async Task RefreshArriving(List<Train> list, Options options)
         {
             foreach (Train train in list)
@@ -105,7 +103,7 @@ namespace FantasticFour.bloc
                     from = getFrom.journeySections[0].beginTimeTableRow.stationShortCode;
 
                 }
-                catch (Exception exEndpoints)
+                catch (Exception)
                 {
                     from = "N/A";
                 }
