@@ -41,14 +41,14 @@ namespace FantasticFour.network
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        Console.ReadKey();
+                        File.AppendAllText("errorLog.txt", DateTime.Now + "| error: Could not decompress data \n" + ex.ToString() + "\n\n");
                         return default(T);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Api query failed: " + response.StatusCode);
+
+                    File.AppendAllText("errorLog.txt", DateTime.Now + $"| error: Api query failed with status ({response.StatusCode})\n\n");
                     return default(T);
                 }
             }
