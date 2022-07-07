@@ -13,7 +13,7 @@ namespace FantasticFour.bloc
 {
     static public class Show
     {
-        public static void Features(RootobjectFeatures train, Options options)
+        public static async Task Features(RootobjectFeatures train, Options options)
         {
             while (true)
             {
@@ -43,13 +43,17 @@ namespace FantasticFour.bloc
             while (true)
             {
                 Console.Clear();
-                RefreshArriving(list, options);
-                Console.WriteLine("\nShowing next 25 trains arriving to {0}",options.DestinationStation, options.Date.ToShortDateString());
+                Console.BackgroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -20} {4, -10} {5, -10}", "Train ID", "Type", "Arriving", "At", "From", "Late");
+                Console.BackgroundColor = ConsoleColor.Black;
+
+                RefreshArriving(list, options).Wait();
+                
+                Console.WriteLine("\nShowing next 25 trains arriving to {0}", options.DestinationStation, options.Date.ToShortDateString());
                 Console.Write("Press any key to exit...");
                 var input = Console.ReadKey();
-                if (input.Key != ConsoleKey.Escape) break;
+                if (input.Key != ConsoleKey.Escape) return;
             }
-
         }
         internal static void RefreshDeparting(List<Train> list, Options options)
         {
@@ -71,18 +75,14 @@ namespace FantasticFour.bloc
                 Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -10} {4, -10} {5, -10}", trainId, trainType, departing, leaves.ToString("HH:mm"), destination, arrives.ToString("HH:mm"));
             }
         }        
-        internal static void RefreshArriving(List<Train> list, Options options)
+        internal static async Task RefreshArriving(List<Train> list, Options options)
         {
-            Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine(" {0, -10} {1, -10} {2, -10} {3, -20} {4, -10} {5, -10}", "Train ID","Type", "Arriving", "At", "From", "Late");
-            Console.BackgroundColor = ConsoleColor.Black;
-
             foreach (Train train in list)
             {
                 int index = default;
-                foreach(Timetablerow ttr in train.timeTableRows)
+                foreach (Timetablerow ttr in train.timeTableRows)
                 {
-                    if(ttr.stationShortCode == options.DestinationStation)
+                    if (ttr.stationShortCode == options.DestinationStation)
                     {
                         index = ttr.stationShortCode.IndexOf(options.DestinationStation);
                     }
@@ -90,17 +90,25 @@ namespace FantasticFour.bloc
                 int trainId = train.trainNumber;
                 string trainType = train.trainType;
                 string destination = options.DestinationStation;
-                
-                string from = (from x in train.timeTableRows
-                               where x.commercialStop &&
-                               x.trainStopping
-                               select x.stationShortCode).First();
+                string from = "";
+
+                RootobjectFeatures getFrom = await Metodit.RouteEndpoints(options.Date, train.trainNumber);
+
+                try
+                {
+                    from = getFrom.journeySections[0].beginTimeTableRow.stationShortCode;
+
+                }
+                catch (Exception exEndpoints)
+                {
+                    from = "N/A";
+                }
 
                 DateTime arrives = (from x in train.timeTableRows
                                     where x.stationShortCode == destination
                                     select x.scheduledTime).First();
-                string late =  "";
-                if(DateTime.Now - train.timeTableRows[index].liveEstimateTime < DateTime.Now - train.timeTableRows[index].scheduledTime)
+                string late = "";
+                if (DateTime.Now - train.timeTableRows[index].liveEstimateTime < DateTime.Now - train.timeTableRows[index].scheduledTime)
                 {
                     late = "Late";
                     Console.Write(" {0, -10} {1, -10} {2, -10} {3, -20} {4, -10}", trainId, trainType, destination, arrives.ToString("HH:mm dd:MM:yyyy"), from);
@@ -117,6 +125,8 @@ namespace FantasticFour.bloc
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
             }
+
+
         }
         internal static void RefreshFeatures(RootobjectFeatures train, Options options)
         {

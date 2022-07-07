@@ -44,5 +44,13 @@ namespace FantasticFour.bloc
             var train = await json.GetDataAsync<RootobjectFeatures>(url);
             Show.Features(train, options);
         }
+        public static async Task<RootobjectFeatures> RouteEndpoints(DateTime date, int trainId)
+        {
+            string url = "/compositions/" + date.ToString("yyyy-MM-dd") + "/" + trainId;
+
+            var json = new JsonClient();
+            var train = await json.GetDataAsync<RootobjectFeatures>(url);
+            return train;
+        }
     }
 }
